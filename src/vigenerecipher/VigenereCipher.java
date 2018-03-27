@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *****************************
+  Компьютерный практикум №2
+  ФИ-52, Ершов С., Овчарова М.
+ *****************************
  */
 package vigenerecipher;
 import java.io.*;
@@ -74,16 +75,23 @@ public class VigenereCipher {
         int index =0;
         for(int i=0;i<step;i++)
             arr[i] = countLetter(text[i].toCharArray(),text[i].length());
-        StringBuffer sb = new StringBuffer("громыкове");
-        for(int i=9;i<step-3;i++){
-            index = (max(arr[i])-(int)'о')%32;
+        StringBuffer sb = new StringBuffer("возвращениеджин");
+        //char [] a = sb.toString().toCharArray();
+        //for(int i=0; i<11;i++)
+            //System.out.println(a[i]);
+        /*for(int i=14;i<step-3;i++){
+            index = (max(arr[i])-(int)'е')%32;
             if (index<0)
                 index = index+32;
             sb.append(ALPHABET[index]);
-        }
-        sb.append("ьма");
+        }*/
+        index = (max(arr[15])-(int)'е')%32;
+            if (index<0)
+                index = index+32;
+         
+        sb.append(ALPHABET[index]);
+        sb.append("а");
         return sb.toString();
-        
     }
     
     public static String encrypt(String plaintext, String key){
@@ -133,9 +141,8 @@ public class VigenereCipher {
         }
         catch(IOException ex){
             System.out.print(ex.getMessage());
-        }
-             
-        String keys[] = {"хз","кот","ключ","ломик","секретноепослание"};
+        }  
+        String keys[] = {"хз","кот","ключ","степа","секретноепослание"};
         String ciphers[] = new String[5];
         for(int i=0;i<5;i++)
             ciphers[i] = encrypt(plaintext,keys[i]);
@@ -146,27 +153,27 @@ public class VigenereCipher {
         for(int i=0;i<5;i++)
             cIndex[i+1] = coincidenceIndex(ciphers[i]);     
         for(int i=0;i<6;i++)
-            System.out.printf("%f ", cIndex[i]);
+            System.out.printf("%f \n", cIndex[i]);
         System.out.println();
         
 
-
         //decrypt var 4
         //System.out.println(ciphertext);
-        //float cI = coincidenceIndex(ciphertext);
-        //System.out.println(cI);
-        //for(int i=2;i<20;i++)//13
-            //System.out.println(i + " " +testOfKeySize(ciphertext,i));
-        String[] splittedText = splitText(ciphertext,13);
-        String key = keySelection(splittedText,13);//громыковедьма
+        /*float cI = coincidenceIndex(ciphertext);
+        System.out.println(cI);
+        for(int i=2;i<30;i++)//13,17
+            System.out.println(i + " " +testOfKeySize(ciphertext,i));
+        String[] splittedText = splitText(ciphertext,17);*/
+        String key = new String("громыковедьма");
+                //keySelection(splittedText,17);//громыковедьма,возвращениеджинна
         System.out.println(key);
         String text = decrypt(ciphertext,key);
-        char[] arr = text.toCharArray();
-        /*for(int i=0;i<200;i++){
-            if (i %13==0)
+        /*char[] arr = text.toCharArray();
+        for(int i=0;i<700;i++){
+            if (i %17==0)
                 System.out.println();
             System.out.print(arr[i]);
-         */
+        }*/
         //System.out.println(text);
         try {
             try (FileWriter fw = new FileWriter(PATH_TO_WRITE)) {
@@ -175,8 +182,7 @@ public class VigenereCipher {
             }
         }
         catch (IOException ex) {
-            System.out.println(ex.getMessage()); //чтобы хоть что-то знать о возможной ошибке
+            System.out.println(ex.getMessage());
         }  
-    }
-    
+    } 
 }
